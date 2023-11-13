@@ -1,0 +1,49 @@
+name: libjpeg
+description: "Dart bindings for libjpeg."
+version: 0.0.1
+
+environment:
+  sdk: '>=3.3.0-71.0.dev <4.0.0'
+  flutter: '>=3.3.0'
+
+dependencies:
+  ffi: any
+  libexif: any
+
+dev_dependencies:
+  ffigen: any
+  flutter_lints: ^3.0.0
+
+dependency_overrides:
+  libexif:
+    path: /Users/tvolkert/project/tvolkert/libexif
+
+ffigen:
+  output: 'lib/libjpeg.dart'
+  name: 'LibJpeg'
+  description: 'Dart bindings for libjpeg'
+  exclude-all-by-default: true
+  functions:
+    include:
+      - jpeg_.*
+  structs:
+    include:
+      - _JPEG.*
+    rename:
+      '_Exif(.*)': 'Exif$1'
+  enums:
+    include:
+      - JPEG.*
+  globals:
+    include:
+      - jpeg_.*
+  typedefs:
+    include:
+      - JPEG.*
+  library-imports:
+    custom_lib: 'package:libexif/libexif.dart'
+  compiler-opts:
+    - '-I.'
+  headers:
+    entry-points:
+      - 'libjpeg/**.h'
