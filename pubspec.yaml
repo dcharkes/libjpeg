@@ -1,10 +1,9 @@
 name: libjpeg
-description: "Dart bindings for libjpeg."
+description: 'Dart bindings for libjpeg.'
 version: 0.0.1
 
 environment:
   sdk: '>=3.3.0-71.0.dev <4.0.0'
-  flutter: '>=3.3.0'
 
 dependencies:
   ffi: any
@@ -16,27 +15,28 @@ dev_dependencies:
 
 dependency_overrides:
   libexif:
-    path: /Users/tvolkert/project/tvolkert/libexif
+    path: ../libexif
 
 ffigen:
   output:
     bindings: 'lib/libjpeg.dart'
     symbol-file:
-      output: 'package:libjpeg/symbols.yaml' # Daco: how do I tell it about package:libexif/symbols.yaml so it doesn't try to define those symbols here as well?
-      import-path: 'package:libjpeg/base.dart' # Daco: what is the point of this?
+      output: 'package:libjpeg/symbols.yaml'
+      import-path: 'package:libjpeg/libjpeg.dart' # If another package wants to import the symbols from package:libjpeg/symbols.yaml, they are in package:libjpeg/libjpeg.dart.
   name: 'LibJpeg'
   description: 'Dart bindings for libjpeg'
   exclude-all-by-default: true
   library-imports:
-    custom_lib: 'package:libexif/libexif.dart' # Daco: why isn't this working?
+    libexif: 'package:libexif/libexif.dart' # Optional: Otherwise the lib import will be 'impl1' instead of `libexif`.
+  import:
+    symbol-files:
+      - 'package:libexif/symbols.yaml'
   functions:
     include:
       - jpeg_.*
   structs:
     include:
       - _JPEG.*
-    exclude:
-     - _?Exif.*
     rename:
       '_Exif(.*)': 'Exif$1'
   enums:
@@ -55,6 +55,7 @@ ffigen:
       - _?Exif.*
   compiler-opts:
     - '-I.'
+    - '-I../libexif/' # Ensure that we find the headers from libexif.
   headers:
     entry-points:
       - 'libjpeg/**.h'

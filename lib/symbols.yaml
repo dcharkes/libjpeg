@@ -1,13 +1,9 @@
 format_version: 1.0.0
 files:
-  package:libjpeg/base.dart:
+  package:libjpeg/libjpeg.dart:
     used-config:
       ffi-native: false
     symbols:
-      c:@EA@ExifFormat:
-        name: ExifFormat
-      c:@EA@ExifTag:
-        name: ExifTag
       c:@EA@JPEGMarker:
         name: JPEGMarker
       c:@F@jpeg_data_append_section:
@@ -44,20 +40,6 @@ files:
         name: jpeg_marker_get_description
       c:@F@jpeg_marker_get_name:
         name: jpeg_marker_get_name
-      c:@S@_ExifContent:
-        name: ExifContent
-      c:@S@_ExifContentPrivate:
-        name: ExifContentPrivate
-      c:@S@_ExifData:
-        name: ExifData
-      c:@S@_ExifDataPrivate:
-        name: ExifDataPrivate
-      c:@S@_ExifEntry:
-        name: ExifEntry
-      c:@S@_ExifEntryPrivate:
-        name: ExifEntryPrivate
-      c:@S@_ExifLog:
-        name: ExifLog
       c:@S@_JPEGContentGeneric:
         name: _JPEGContentGeneric
       c:@S@_JPEGData:
