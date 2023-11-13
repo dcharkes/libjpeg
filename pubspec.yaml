@@ -19,29 +19,40 @@ dependency_overrides:
     path: /Users/tvolkert/project/tvolkert/libexif
 
 ffigen:
-  output: 'lib/libjpeg.dart'
+  output:
+    bindings: 'lib/libjpeg.dart'
+    symbol-file:
+      output: 'package:libjpeg/symbols.yaml' # Daco: how do I tell it about package:libexif/symbols.yaml so it doesn't try to define those symbols here as well?
+      import-path: 'package:libjpeg/base.dart' # Daco: what is the point of this?
   name: 'LibJpeg'
   description: 'Dart bindings for libjpeg'
   exclude-all-by-default: true
+  library-imports:
+    custom_lib: 'package:libexif/libexif.dart' # Daco: why isn't this working?
   functions:
     include:
       - jpeg_.*
   structs:
     include:
       - _JPEG.*
+    exclude:
+     - _?Exif.*
     rename:
       '_Exif(.*)': 'Exif$1'
   enums:
     include:
       - JPEG.*
+    exclude:
+      - ExifFormat # Daco: why is this still getting defined in libjpeg.dart even though I told it to exclude?
+      - ExifTag
   globals:
     include:
       - jpeg_.*
   typedefs:
     include:
       - JPEG.*
-  library-imports:
-    custom_lib: 'package:libexif/libexif.dart'
+    exclude:
+      - _?Exif.*
   compiler-opts:
     - '-I.'
   headers:
